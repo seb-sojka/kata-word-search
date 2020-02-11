@@ -6,3 +6,4 @@
 using namespace std;
 
 string readFile(string fileName);
+string getFirstLine(string textFile);

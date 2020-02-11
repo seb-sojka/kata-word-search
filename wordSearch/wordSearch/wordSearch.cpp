@@ -14,3 +14,14 @@ string readFile(string fileName)
 	openFile.close();
 	return output.str();
 }
+
+//Returns the first line of a string
+//Parameters: file name as string
+//Return: string
+string getFirstLine(string textFile)
+{
+	string firstLine = "";
+	istringstream textStream(textFile);
+	getline(textStream, firstLine);
+	return firstLine;
+}

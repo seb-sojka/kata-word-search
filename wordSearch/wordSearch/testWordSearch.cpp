@@ -1,10 +1,9 @@
 // Used for testing of wordSearch.cpp
 //
-#include <string>
 #include "wordSearch.h"
-using namespace std;
 
-const string testString = R"(BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA
+const string testText =
+R"(BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA
 U,M,K,H,U,L,K,I,N,V,J,O,C,W,E
 L,L,S,H,K,Z,Z,W,Z,C,G,J,U,Y,G
 H,S,U,P,J,P,R,J,D,H,S,B,X,T,G
@@ -22,14 +21,20 @@ W,Z,M,I,S,U,K,U,R,B,I,D,U,X,S
 K,Y,L,B,Q,Q,P,M,D,F,C,K,E,A,B)";
 
 const string testFile = "test.txt";
+const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
+const string testWords[] = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
 
 void testReadFile();
+void stringCompareTest(string expected, string actual, string testName);
+void testGetFirstLine();
+
 
 //Runs the tests for wordSearch.cpp
 int main()
 {
-	cout << "Tests for wordSearch.cpp";
+	cout << "Tests for wordSearch.cpp\n";
 	testReadFile();
+	testGetFirstLine();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -37,16 +42,32 @@ int main()
 //Return: None
 void testReadFile()
 {
-	cout << "Read File Test\n";
-	string out = readFile(testFile);
-	if ((out.compare(testString)) == 0)
+	stringCompareTest(testText, readFile(testFile), "Read File Test");
+}
+
+//An assert for compare strings
+//Parameters: expected string, actual string, and the name of the test.
+//Return: None
+void stringCompareTest(string expected, string actual, string testName)
+{
+	cout << "\n" << testName << "\n";
+	if ((actual.compare(expected)) == 0)
 	{
 		cout << "Success: String matches\n";
 	}
 	else
 	{
-		cout << "Fail: String doesn't match\n";
-		cout << "String Expected:\n" << testString;
-		cout << "\nString results:\n" << out;
+		cout << "Failure: String doesn't match\n";
+		cout << "String Expected:\n" << expected;
+		cout << "\nString results:\n" << actual;
 	}
+}
+
+
+//Test for parse the a string to return first line of a string and get the words.
+//Parameters: None
+//Return: None
+void testGetFirstLine()
+{
+	stringCompareTest(testFirstLine, getFirstLine(testText), "Get First Line from String");
 }
