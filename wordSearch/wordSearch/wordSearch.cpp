@@ -16,7 +16,7 @@ string readFile(string fileName)
 }
 
 //Returns the first line of a string
-//Parameters: file name as string
+//Parameters: text of file as a string
 //Return: string
 string getFirstLine(string textFile)
 {
@@ -24,4 +24,19 @@ string getFirstLine(string textFile)
 	istringstream textStream(textFile);
 	getline(textStream, firstLine);
 	return firstLine;
+}
+
+//Processes the text from a file into words. Delimited by ','
+//Parameters: line of text as a string
+//Return: vector of string
+vector<string> getWords(string textFile)
+{
+	vector<string> words;
+	stringstream  wordLine(getFirstLine(textFile));
+	string temp;
+	while (getline(wordLine, temp, ','))
+	{
+		words.push_back(temp);
+	}
+	return words;
 }

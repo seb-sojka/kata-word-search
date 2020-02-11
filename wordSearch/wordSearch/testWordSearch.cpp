@@ -1,6 +1,7 @@
 // Used for testing of wordSearch.cpp
 //
 #include "wordSearch.h"
+#include <algorithm>
 
 const string testText =
 R"(BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA
@@ -22,11 +23,12 @@ K,Y,L,B,Q,Q,P,M,D,F,C,K,E,A,B)";
 
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
-const string testWords[] = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
+const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
 
 void testReadFile();
 void stringCompareTest(string expected, string actual, string testName);
 void testGetFirstLine();
+void testProcessWords();
 
 
 //Runs the tests for wordSearch.cpp
@@ -35,6 +37,7 @@ int main()
 	cout << "Tests for wordSearch.cpp\n";
 	testReadFile();
 	testGetFirstLine();
+	testProcessWords();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -70,4 +73,36 @@ void stringCompareTest(string expected, string actual, string testName)
 void testGetFirstLine()
 {
 	stringCompareTest(testFirstLine, getFirstLine(testText), "Get First Line from String");
+}
+
+//Test for parse a string to return the words to find in a vector.
+//Parameters: None
+//Return: None
+void testProcessWords()
+{
+	cout << "\nGet words from text and in a vector\n";
+	vector<string> vectorWords = getWords(testText);
+	
+	//Get size of the vectors.
+	int vectorSizeTest = (int)vectorWords.size();
+	int vectorSizeExpected = (int)testVectorWords.size();
+	if (vectorSizeTest != vectorSizeExpected)
+	{
+		cout << "Error: Size different in vector\n";
+		cout << "Size Expected: " << vectorSizeExpected << "\n";
+		cout << "Size Actual: " << vectorSizeTest << "\n";
+	}
+	else
+	{
+		cout << "Success: Size matches\n";
+	}
+
+	//Get the minimum size between the vectors to avoid memory errors. 
+	int minSize = min(vectorSizeTest, vectorSizeExpected);
+
+	for (int i = 0; i < minSize; i++)
+	{
+		string testName = "Vector String Test at index " + to_string(i);
+		stringCompareTest(vectorWords.at(i), testVectorWords.at(i), testName);
+	}
 }
