@@ -40,3 +40,12 @@ vector<string> getWords(string textFile)
 	}
 	return words;
 }
+
+//Converts text file of a word search without the words to a 2-d vector
+//Parameters: String of the word search without the words so just the character grid
+//Return: 2-d vector of characters
+vector<vector<char> > getVectorCharGrid(string textFile)
+{
+	vector<vector<char> > returnVec;
+	return returnVec;
+}

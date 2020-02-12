@@ -21,6 +21,16 @@ O,J,Y,E,U,L,N,C,C,L,Y,B,Z,U,H
 W,Z,M,I,S,U,K,U,R,B,I,D,U,X,S
 K,Y,L,B,Q,Q,P,M,D,F,C,K,E,A,B)";
 
+const string testVectorText =
+R"(U,M,K
+H,U,L
+K,I,N)";
+
+const vector<vector<char> >expVectorChar = {
+{'U','M','K'},
+{'H','U','L'},
+{'K','I','N'} };
+
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
 const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
@@ -29,7 +39,9 @@ void testReadFile();
 void stringCompareTest(string expected, string actual, string testName);
 void testGetFirstLine();
 void testProcessWords();
-
+void testCharGridVector();
+void intCompare(int exp, int auct, string testName);
+int minCompare(int exp, int act, string testName);
 
 //Runs the tests for wordSearch.cpp
 int main()
@@ -38,6 +50,7 @@ int main()
 	testReadFile();
 	testGetFirstLine();
 	testProcessWords();
+	testCharGridVector();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -84,25 +97,89 @@ void testProcessWords()
 	vector<string> vectorWords = getWords(testText);
 	
 	//Get size of the vectors.
-	int vectorSizeTest = (int)vectorWords.size();
-	int vectorSizeExpected = (int)testVectorWords.size();
-	if (vectorSizeTest != vectorSizeExpected)
-	{
-		cout << "Error: Size different in vector\n";
-		cout << "Size Expected: " << vectorSizeExpected << "\n";
-		cout << "Size Actual: " << vectorSizeTest << "\n";
-	}
-	else
-	{
-		cout << "Success: Size matches\n";
-	}
+	int minSize = minCompare((int)testVectorWords.size(), (int)vectorWords.size(), "Word Vector Size");
 
-	//Get the minimum size between the vectors to avoid memory errors. 
-	int minSize = min(vectorSizeTest, vectorSizeExpected);
-
+	//Go through the strings in the vector and compare them
 	for (int i = 0; i < minSize; i++)
 	{
 		string testName = "Vector String Test at index " + to_string(i);
 		stringCompareTest(vectorWords.at(i), testVectorWords.at(i), testName);
 	}
+}
+
+//Returns the min between 2 intgers and does compare between them
+//Parameters: intergers for expected (exp) and acttual (act) along with string for test name
+//Returns: Minimum between the 2 integers
+int minCompare(int exp, int act, string testName)
+{
+	intCompare(exp, act, testName);
+	return min(exp, act);
+}
+
+//Compares integers and prints out success or failure
+//Parameters: 2 integers along with name of test as string
+//Return: None
+void intCompare(int exp, int act, string testName)
+{
+	cout << "\n" << testName << "\n";
+	if (exp != act)
+	{
+		cout << "Failure: Values does not match\n";
+		cout << "Expected Value: " << exp << "\n";
+		cout << "Actual Value: " << act << "\n";
+	}
+	else
+	{
+		cout << "Success: Integers matches\n";
+	}
+}
+
+//Prints the characters from a 2-d vector
+//Parameters: 2-d vector of chracters
+//Return: None
+void printCharVector(vector<vector<char>>input)
+{
+	cout << "{ ";
+	for (int i = 0; i < input.size(); i++)
+	{
+		cout << "{ ";
+		cout << input[i][0];
+		for (int j = 1; j < input[i].size(); j++)
+		{
+			cout << ", " << input[i][j];
+		}
+		cout << "},\n";
+	}
+	cout << "}";
+}
+
+//Test for change the grid of characters into a 2-D vector
+void testCharGridVector()
+{
+	cout << "\nTest: Convert character grid to vector\n";
+	vector<vector<char> > actVector = getVectorCharGrid(testVectorText);
+
+	int minSizeHor = minCompare(expVectorChar.size(), actVector.size(), "Horizontal Vector Size of character grid");
+	for (int i = 0; i < minSizeHor; i++)
+	{
+		int minSizeVert = minCompare(expVectorChar.size(), actVector.size(),
+			"Vertical vector size of character grid at " + to_string(i));
+
+		for (int j = 0; j < minSizeVert; j++)
+		{
+			if (expVectorChar[i][j] != actVector[i][j])
+			{
+				cout << "Failure: Vectors do not match\n";
+				cout << "Expected Vector:\n";
+				printCharVector(expVectorChar);
+				cout << "Actual Vector:\n";
+				printCharVector(actVector);
+				exit(0);
+			}
+		}
+	}
+
+	cout << "Success: Vectors match";
+
+
 }
