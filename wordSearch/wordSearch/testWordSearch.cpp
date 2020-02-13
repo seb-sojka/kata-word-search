@@ -162,7 +162,7 @@ void testCharGridVector()
 	int minSizeHor = minCompare(expVectorChar.size(), actVector.size(), "Horizontal Vector Size of character grid");
 	for (int i = 0; i < minSizeHor; i++)
 	{
-		int minSizeVert = minCompare(expVectorChar.size(), actVector.size(),
+		int minSizeVert = minCompare(expVectorChar[i].size(), actVector[i].size(),
 			"Vertical vector size of character grid at " + to_string(i));
 
 		for (int j = 0; j < minSizeVert; j++)

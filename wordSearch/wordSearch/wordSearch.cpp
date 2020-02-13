@@ -47,5 +47,27 @@ vector<string> getWords(string textFile)
 vector<vector<char> > getVectorCharGrid(string textFile)
 {
 	vector<vector<char> > returnVec;
+
+	//Convert text file to sstring stream to use getline
+	stringstream fileStream(textFile);
+	string lineString;
+	//Use string for able to use getLine to process a line of characters
+	string tempString;
+	int horCount = 0;
+
+	//Loops through all the lines of text
+	while(getline(fileStream, lineString))
+	{
+		stringstream lineStream(lineString);
+		returnVec.push_back(vector<char>());
+
+		//Loops through the line to get the characters
+		while (getline(lineStream, tempString, ','))
+		{
+			//Push the character found onto the vector
+			returnVec[horCount].push_back(tempString.at(0));
+		}
+		horCount++;
+	}
 	return returnVec;
 }
