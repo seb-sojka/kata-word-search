@@ -26,15 +26,21 @@ R"(U,M,K
 H,U,L
 K,I,N)";
 
-const vector<vector<char> >expVectorChar = {
-{'U','M','K'},
-{'H','U','L'},
-{'K','I','N'} };
-
 const string findWord = "KIN";
 
-//Expected corrindates 
-const vector<vector<int>>expCorr = { {2, 0},{2, 1}, {2, 2} };
+//Expected corrindates left to right
+const vector<vector<char> >expVectorCharLR = {
+{'U','H','K'},
+{'M','U','I'},
+{'K','L','N'} };
+const vector<vector<int>>expCorrLR = { {0, 2},{1, 2}, {2, 2} };
+//Expected corrindates right to left
+const vector<vector<char> >expVectorCharRL = {
+{'U','H','N'},
+{'M','U','I'},
+{'K','L','K'} };
+const vector<vector<int>>expCorrRL = { {2, 2},{1, 2}, {0, 2} };
+
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
 const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
@@ -42,6 +48,7 @@ const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPO
 //Functions for testing
 void testReadFile();
 void testFindWordCorrLR();
+void testFindWordCorrRL();
 void testGetFirstLine();
 void testProcessWords();
 void testCharGridVector();
@@ -60,6 +67,7 @@ int main()
 	testProcessWords();
 	testCharGridVector();
 	testFindWordCorrLR();
+	testFindWordCorrRL();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -152,7 +160,7 @@ void printCharVector(vector<vector<char>>input)
 	for (int i = 0; i < input.size(); i++)
 	{
 		cout << "{ ";
-		cout << input[i][0];
+		cout << input[0][i];
 		for (int j = 1; j < input[i].size(); j++)
 		{
 			cout << ", " << input[i][j];
@@ -167,27 +175,18 @@ void testCharGridVector()
 {
 	cout << "\nTest: Convert character grid to vector\n";
 	vector<vector<char> > actVector = getVectorCharGrid(testVectorText);
-
-	int minSizeHor = minCompare((int)expVectorChar.size(), (int)actVector.size(), "Horizontal Vector Size of character grid");
-	for (int i = 0; i < minSizeHor; i++)
+	if (actVector == expVectorCharLR)
 	{
-		int minSizeVert = minCompare((int)expVectorChar[i].size(), (int)actVector[i].size(),
-			"Vertical vector size of character grid at " + to_string(i));
-
-		for (int j = 0; j < minSizeVert; j++)
-		{
-			if (expVectorChar[i][j] != actVector[i][j])
-			{
-				cout << "Failure: Vectors do not match\n";
-				cout << "Expected Vector:\n";
-				printCharVector(expVectorChar);
-				cout << "Actual Vector:\n";
-				printCharVector(actVector);
-				exit(0);
-			}
-		}
+		cout << "Success: Character grid vectors match\n";
 	}
-	cout << "Success: Vectors match\n";
+	else
+	{
+		cout << "Failure: Character grid don't vectors match\n";
+		cout << "Expected vector\n";
+		printCharVector(expVectorCharLR);
+		cout << "Expected vector\n";
+		printCharVector(actVector);
+	}
 }
 
 //Prints the integers from a 2-d vector
@@ -212,10 +211,9 @@ void printIntVector(vector<vector<int>>input)
 //Test for find the coordinates of a word in a 2-d character vector in left to right order
 void testFindWordCorrLR()
 {
-	cout << "\nTest: Find word in vector\n";
-	vector<vector<int> > actCorr = findCorr(findWord, expVectorChar);
-
-	if (expCorr == actCorr)
+	cout << "\nTest: Find word in vector in left to right\n";
+	vector<vector<int> > actCorr = findCorr(findWord, expVectorCharLR);
+	if (expCorrLR == actCorr)
 	{
 		cout << "Success: Coordinates do match\n";
 	}
@@ -223,9 +221,27 @@ void testFindWordCorrLR()
 	{
 		cout << "Failure: Coordinates do not match\n";
 		cout << "Expected coordinates:\n";
-		printIntVector(expCorr);
+		printIntVector(expCorrLR);
 		cout << "Actual Vector:\n";
 		printIntVector(actCorr);
-		exit(0);
+	}
+}
+
+//Test for find the coordinates of a word in a 2-d character vector in right to left order
+void testFindWordCorrRL()
+{
+	cout << "\nTest: Find word in vector in right to left\n";
+	vector<vector<int> > actCorr = findCorr(findWord, expVectorCharRL);
+	if (expCorrRL == actCorr)
+	{
+		cout << "Success: Coordinates do match\n";
+	}
+	else
+	{
+		cout << "Failure: Coordinates do not match\n";
+		cout << "Expected coordinates:\n";
+		printIntVector(expCorrRL);
+		cout << "Actual Vector:\n";
+		printIntVector(actCorr);
 	}
 }
