@@ -130,7 +130,8 @@ vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
 		{1,0},//Left
 		{-1,0},//Right
 		{0,1},//Down
-		{0,-1}//Up
+		{0,-1},//Up
+		{1, 1}//left to right down
 	};
 	
 	//Size of lines
