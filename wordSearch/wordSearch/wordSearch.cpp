@@ -41,36 +41,6 @@ vector<string> getWords(string textFile)
 	return words;
 }
 
-multimap<char, vector<int>> getCharGridMap(string textFile)
-{
-	multimap<char, vector<int>> retMap;
-	//Convert text file to sstring stream to use getline
-	stringstream fileStream(textFile);
-	string lineString;
-	//Use string for able to use getLine to process a line of characters
-	string tempString;
-	int horCount = 0;
-
-	//Loops through all the lines of text
-	while (getline(fileStream, lineString))
-	{
-		int vertCount = 0;
-		stringstream lineStream(lineString);
-		//Loops through the line to get the characters
-		while (getline(lineStream, tempString, ','))
-		{
-			//Inserts into map the character along with its vertical and horzintal coordinates
-			retMap.insert(pair<char, vector<int>>(tempString.at(0), { horCount, vertCount }));
-			vertCount++;
-		}
-		horCount++;
-	}
-
-	return retMap;
-}
-
-
-
 //Converts text file of a word search without the words to a 2-d vector
 //Parameters: String of the word search without the words so just the character grid
 //Return: 2-d vector of characters

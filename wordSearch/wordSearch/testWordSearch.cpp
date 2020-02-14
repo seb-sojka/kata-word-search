@@ -26,17 +26,10 @@ R"(U,M,K
 H,U,L
 K,I,N)";
 
-const multimap<char, vector<int>> expMap = {
-	{'H', {1,0}},
-	{'I', {2,1}},
-	{'K', {0,2}},
-	{'K', {2,0}},
-	{'L', {1,2}},
-	{'M', {0,1}},
-	{'N', {2,2}},
-	{'U', {0,0}},
-	{'U', {1,1}}
-};
+const vector<vector<char> >expVectorChar = {
+{'U','M','K'},
+{'H','U','L'},
+{'K','I','N'} };
 
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
@@ -46,7 +39,7 @@ void testReadFile();
 void stringCompareTest(string expected, string actual, string testName);
 void testGetFirstLine();
 void testProcessWords();
-void testCharGridMap();
+void testCharGridVector();
 void intCompare(int exp, int auct, string testName);
 int minCompare(int exp, int act, string testName);
 
@@ -57,7 +50,7 @@ int main()
 	testReadFile();
 	testGetFirstLine();
 	testProcessWords();
-	testCharGridMap();
+	testCharGridVector();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -141,45 +134,52 @@ void intCompare(int exp, int act, string testName)
 	}
 }
 
-//Prints the integers from a vector
-//Parameters: a vector of integers
+//Prints the characters from a 2-d vector
+//Parameters: 2-d vector of chracters
 //Return: None
-void printCharVector(vector<int>input)
+void printCharVector(vector<vector<char>>input)
 {
 	cout << "{ ";
 	for (int i = 0; i < input.size(); i++)
 	{
-		cout << to_string(input[i]) << ", ";
+		cout << "{ ";
+		cout << input[i][0];
+		for (int j = 1; j < input[i].size(); j++)
+		{
+			cout << ", " << input[i][j];
+		}
+		cout << "},\n";
 	}
 	cout << "}";
 }
 
-//Test for going from a string text of characters to a map
-void testCharGridMap()
+//Test for change the grid of characters into a 2-D vector
+void testCharGridVector()
 {
-	multimap<char, vector<int>> actMap = getCharGridMap(testVectorText);
+	cout << "\nTest: Convert character grid to vector\n";
+	vector<vector<char> > actVector = getVectorCharGrid(testVectorText);
 
-	cout << "\nGet string text from text and into a map\n";
-	if (actMap == expMap)
+	int minSizeHor = minCompare(expVectorChar.size(), actVector.size(), "Horizontal Vector Size of character grid");
+	for (int i = 0; i < minSizeHor; i++)
 	{
-		cout << "Success: The maps match\n";
-	}
-	else
-	{
-		cout << "Failure: The maps do not match match\n";
-		cout << "Expected Map\n";
-		for (pair<char, vector<int>> elem : expMap)
+		int minSizeVert = minCompare(expVectorChar[i].size(), actVector[i].size(),
+			"Vertical vector size of character grid at " + to_string(i));
+
+		for (int j = 0; j < minSizeVert; j++)
 		{
-			cout << elem.first << " :: ";
-			printCharVector(elem.second);
-			cout << std::endl;
-		}
-		cout << "Actual Map\n";
-		for (pair<char, vector<int>> elem : actMap)
-		{
-			cout << elem.first << " :: ";
-			printCharVector(elem.second);
-			cout << std::endl;
+			if (expVectorChar[i][j] != actVector[i][j])
+			{
+				cout << "Failure: Vectors do not match\n";
+				cout << "Expected Vector:\n";
+				printCharVector(expVectorChar);
+				cout << "Actual Vector:\n";
+				printCharVector(actVector);
+				exit(0);
+			}
 		}
 	}
+
+	cout << "Success: Vectors match";
+
+
 }
