@@ -63,6 +63,13 @@ const vector<vector<char> >expVectorCharLRD = {
 {'K','L','N'} };
 const vector<vector<int>>expCorrLRD = { {0, 0},{1, 1}, {2, 2} };
 
+//Expected corrdinates bottom left to top right
+const vector<vector<char> >expVectorCharLRU = {
+{'K','D','K'},
+{'M','I','U'},
+{'N','L','J'} };
+const vector<vector<int>>expCorrLRU = { {0, 2},{1, 1}, {2, 0} };
+
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
 const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
@@ -77,6 +84,7 @@ void testFindWordCorrRL();
 void testFindWordCorrUD();
 void testFindWordCorrDU();
 void testFindWordCorrLRD();
+void testFindWordCorrLRU();
 
 //Utility Functions
 void stringCompareTest(string expected, string actual, string testName);
@@ -95,6 +103,8 @@ int main()
 	testFindWordCorrRL();
 	testFindWordCorrUD();
 	testFindWordCorrLRD();
+	testFindWordCorrLRU();
+
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -311,10 +321,10 @@ void testFindWordCorrDU()
 	}
 }
 
-//Test for find the coordinates of a word in a 2-d character vector in top left to bottom right
+//Test diagonally descendingfor find the coordinates of a word in a 2-d character vector in top left to bottom right
 void testFindWordCorrLRD()
 {
-	cout << "\nTest: Find word in vector in down to up direction\n";
+	cout << "\nTest: Find word in vector in top left to bottom right\n";
 	vector<vector<int> > actCorr = findCorr(findWord, expVectorCharLRD);
 	if (expCorrLRD == actCorr)
 	{
@@ -325,6 +335,25 @@ void testFindWordCorrLRD()
 		cout << "Failure: Coordinates do not match\n";
 		cout << "Expected coordinates:\n";
 		printIntVector(expCorrLRD);
+		cout << "Actual Vector:\n";
+		printIntVector(actCorr);
+	}
+}
+
+//Test diagonally descendingfor find the coordinates of a word in a 2-d character vector in bottom left to top right
+void testFindWordCorrLRU()
+{
+	cout << "\nTest: Find word in vector in down to up direction\n";
+	vector<vector<int> > actCorr = findCorr(findWord, expVectorCharLRU);
+	if (expCorrLRU == actCorr)
+	{
+		cout << "Success: Coordinates do match\n";
+	}
+	else
+	{
+		cout << "Failure: Coordinates do not match\n";
+		cout << "Expected coordinates:\n";
+		printIntVector(expCorrLRU);
 		cout << "Actual Vector:\n";
 		printIntVector(actCorr);
 	}
