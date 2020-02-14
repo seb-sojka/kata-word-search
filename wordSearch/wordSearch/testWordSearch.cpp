@@ -31,15 +31,23 @@ const vector<vector<char> >expVectorChar = {
 {'H','U','L'},
 {'K','I','N'} };
 
+const string findWord = "KIN";
+
+//Expected corrindates 
+const vector<vector<int>>expCorr = { {2, 0},{2, 1}, {2, 2} };
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
 const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
 
+//Functions for testing
 void testReadFile();
-void stringCompareTest(string expected, string actual, string testName);
+void testFindWordCorrLR();
 void testGetFirstLine();
 void testProcessWords();
 void testCharGridVector();
+
+//Utility Functions
+void stringCompareTest(string expected, string actual, string testName);
 void intCompare(int exp, int auct, string testName);
 int minCompare(int exp, int act, string testName);
 
@@ -51,6 +59,7 @@ int main()
 	testGetFirstLine();
 	testProcessWords();
 	testCharGridVector();
+	testFindWordCorrLR();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -159,10 +168,10 @@ void testCharGridVector()
 	cout << "\nTest: Convert character grid to vector\n";
 	vector<vector<char> > actVector = getVectorCharGrid(testVectorText);
 
-	int minSizeHor = minCompare(expVectorChar.size(), actVector.size(), "Horizontal Vector Size of character grid");
+	int minSizeHor = minCompare((int)expVectorChar.size(), (int)actVector.size(), "Horizontal Vector Size of character grid");
 	for (int i = 0; i < minSizeHor; i++)
 	{
-		int minSizeVert = minCompare(expVectorChar[i].size(), actVector[i].size(),
+		int minSizeVert = minCompare((int)expVectorChar[i].size(), (int)actVector[i].size(),
 			"Vertical vector size of character grid at " + to_string(i));
 
 		for (int j = 0; j < minSizeVert; j++)
@@ -178,8 +187,45 @@ void testCharGridVector()
 			}
 		}
 	}
+	cout << "Success: Vectors match\n";
+}
 
-	cout << "Success: Vectors match";
+//Prints the integers from a 2-d vector
+//Parameters: 2-d vector of integers
+//Return: None
+void printIntVector(vector<vector<int>>input)
+{
+	cout << "{ ";
+	for (int i = 0; i < input.size(); i++)
+	{
+		cout << "{ ";
+		cout << input[i][0];
+		for (int j = 1; j < input[i].size(); j++)
+		{
+			cout << ", " << to_string(input[i][j]);
+		}
+		cout << "},\n";
+	}
+	cout << "}";
+}
 
+//Test for find the coordinates of a word in a 2-d character vector in left to right order
+void testFindWordCorrLR()
+{
+	cout << "\nTest: Find word in vector\n";
+	vector<vector<int> > actCorr = findCorr(findWord, expVectorChar);
 
+	if (expCorr == actCorr)
+	{
+		cout << "Success: Coordinates do match\n";
+	}
+	else
+	{
+		cout << "Failure: Coordinates do not match\n";
+		cout << "Expected coordinates:\n";
+		printIntVector(expCorr);
+		cout << "Actual Vector:\n";
+		printIntVector(actCorr);
+		exit(0);
+	}
 }

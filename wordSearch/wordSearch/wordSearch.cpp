@@ -71,3 +71,45 @@ vector<vector<char> > getVectorCharGrid(string textFile)
 	}
 	return returnVec;
 }
+
+//Finds coordinates to spell out a word 
+//Parameters: word as string, 2-d vector of chaaracters
+//Return: 2-d vector of integers 
+vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
+{
+	vector<vector<int> > retVector;
+
+	//Flag to exit loops when word is found
+	bool foundWordFlag = 0;
+	//Go through the vertical lines of vector
+	for (int i = 0; i < grid.size(); i++)
+	{
+		//Count for which character in the word we are looking for
+		int charCount = 0;
+		//Go each character in line
+		for (int j = 0; j < grid[i].size(); j++)
+		{
+			//Check to see if character matches next character in word
+			if (word.at(charCount) == grid[i][j])
+			{
+				charCount++;
+				retVector.push_back({ i, j });
+			}
+			else
+			{
+				charCount = 0;
+				retVector.clear();
+			}
+			if (charCount == word.length())
+			{
+				foundWordFlag = 1;
+				break;
+			}
+		}
+		if (foundWordFlag == 1)
+		{
+			break;
+		}
+	}
+	return retVector;
+}
