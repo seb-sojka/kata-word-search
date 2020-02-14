@@ -127,13 +127,14 @@ vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
 	vector<int> startingCoor;
 	vector<vector<int> > possibleDirections =
 	{
-		{1,0},//Left
-		{-1,0},//Right
-		{0,1},//Down
-		{0,-1},//Up
+		{1, 0},//Left to right
+		{-1, 0},//Right to left
+		{0, 1},//Up to down
+		{0, -1},//Down to up
 		{1, 1},//left to right down
 		{1, -1},//left to right up
-		{-1,-1}//right to left up
+		{-1, -1},//right to left up
+		{-1, 1}//Right to left down
 	};
 	
 	//Size of lines
