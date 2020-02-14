@@ -28,18 +28,26 @@ K,I,N)";
 
 const string findWord = "KIN";
 
-//Expected corrindates left to right
+//Expected corrdinates left to right
 const vector<vector<char> >expVectorCharLR = {
 {'U','H','K'},
 {'M','U','I'},
 {'K','L','N'} };
 const vector<vector<int>>expCorrLR = { {0, 2},{1, 2}, {2, 2} };
-//Expected corrindates right to left
+
+//Expected corrdinates right to left
 const vector<vector<char> >expVectorCharRL = {
 {'U','H','N'},
 {'M','U','I'},
 {'K','L','K'} };
 const vector<vector<int>>expCorrRL = { {2, 2},{1, 2}, {0, 2} };
+
+//Expected corrdinates up to down
+const vector<vector<char> >expVectorCharUD = {
+{'K','I','N'},
+{'M','U','U'},
+{'K','L','K'} };
+const vector<vector<int>>expCorrUD = { {0, 0},{0, 1}, {0, 2} };
 
 const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
@@ -52,6 +60,7 @@ void testFindWordCorrRL();
 void testGetFirstLine();
 void testProcessWords();
 void testCharGridVector();
+void testFindWordCorrUD();
 
 //Utility Functions
 void stringCompareTest(string expected, string actual, string testName);
@@ -68,6 +77,7 @@ int main()
 	testCharGridVector();
 	testFindWordCorrLR();
 	testFindWordCorrRL();
+	testFindWordCorrUD();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -241,6 +251,25 @@ void testFindWordCorrRL()
 		cout << "Failure: Coordinates do not match\n";
 		cout << "Expected coordinates:\n";
 		printIntVector(expCorrRL);
+		cout << "Actual Vector:\n";
+		printIntVector(actCorr);
+	}
+}
+
+//Test for find the coordinates of a word in a 2-d character vector in up to down order
+void testFindWordCorrUD()
+{
+	cout << "\nTest: Find word in vector in up to down direction\n";
+	vector<vector<int> > actCorr = findCorr(findWord, expVectorCharUD);
+	if (expCorrUD == actCorr)
+	{
+		cout << "Success: Coordinates do match\n";
+	}
+	else
+	{
+		cout << "Failure: Coordinates do not match\n";
+		cout << "Expected coordinates:\n";
+		printIntVector(expCorrUD);
 		cout << "Actual Vector:\n";
 		printIntVector(actCorr);
 	}

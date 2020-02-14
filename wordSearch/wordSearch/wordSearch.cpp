@@ -43,7 +43,7 @@ vector<string> getWords(string textFile)
 
 //Converts text file of a word search without the words to a 2-d vector
 //Parameters: String of the word search without the words so just the character grid
-//Return: 2-d vector of characters where 
+//Return: 2-d vector of characters
 vector<vector<char> > getVectorCharGrid(string textFile)
 {
 	vector<vector<char> > returnVec;
@@ -62,6 +62,7 @@ vector<vector<char> > getVectorCharGrid(string textFile)
 		//Loops through the line to get the characters
 		while (getline(lineStream, tempString, ','))
 		{
+			//Adds new vector if needed
 			if (vertCount >= returnVec.size())
 			{
 				returnVec.push_back(vector<char>());
@@ -127,7 +128,8 @@ vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
 	vector<vector<int> > possibleDirections =
 	{
 		{1,0},//Left
-		{-1,0}//Right
+		{-1,0},//Right
+		{0,1}//Down
 	};
 	
 	//Size of lines
