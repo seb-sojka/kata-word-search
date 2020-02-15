@@ -473,20 +473,20 @@ void testFullNoRead()
 	}
 }
 
-//Full test run where function is called to open file, read it, and find the words and thier coornidates
+//Full test run where function is called to open file, read it, and find the words and their coordinates
 void testFull()
 {
-	cout << "\nTest: Find words in string character  \n";
+	cout << "\nTest: Read file complete a word search\n";
 	map <string, vector<vector<int > >> actMap = wordSearch(testFile);
 	cout << "Actual map:\n";
 	printMap(actMap);
 	if (actMap == expMap)
 	{
-		cout << "Success: Results maps do match\n";
+		cout << "Success: Result maps do match\n";
 	}
 	else
 	{
-		cout << "Failure: Results maps do not match\n";
+		cout << "Failure: Result maps do not match\n";
 		cout << "Expected map:\n";
 		printMap(expMap);
 	}

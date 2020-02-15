@@ -188,7 +188,7 @@ vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
 	return setCoor(startingCoor, (int)word.length(), possibleDirections[directionIndex]);
 }
 
-//Performs a word search on a text file. Opens file, read and processes it, and returns map with string of words to be found and 2-d vector of thier character's coordinates
+//Performs a word search on a text file. Opens file, read and processes it, and returns map with string of words to be found and 2-d vector of their character's coordinates
 //Parameters: file name as string
 //Return: map with string as key and corrdinates as 2-d vector of integers as value
 map < string, vector<vector<int > >> wordSearch(string fileName)
