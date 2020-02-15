@@ -21,6 +21,23 @@ O,J,Y,E,U,L,N,C,C,L,Y,B,Z,U,H
 W,Z,M,I,S,U,K,U,R,B,I,D,U,X,S
 K,Y,L,B,Q,Q,P,M,D,F,C,K,E,A,B)";
 
+const string textGrid =
+R"(U,M,K,H,U,L,K,I,N,V,J,O,C,W,E
+L,L,S,H,K,Z,Z,W,Z,C,G,J,U,Y,G
+H,S,U,P,J,P,R,J,D,H,S,B,X,T,G
+B,R,J,S,O,E,Q,E,T,I,K,K,G,L,E
+A,Y,O,A,G,C,I,R,D,Q,H,R,T,C,D
+S,C,O,T,T,Y,K,Z,R,E,P,P,X,P,F
+B,L,Q,S,L,N,E,E,E,V,U,L,F,M,Z
+O,K,R,I,K,A,M,M,R,M,F,B,A,P,P
+N,U,I,I,Y,H,Q,M,E,M,Q,R,Y,F,S
+E,Y,Z,Y,G,K,Q,J,P,C,Q,W,Y,A,K
+S,J,F,Z,M,Q,I,B,D,B,E,M,K,W,D
+T,G,L,B,H,C,B,E,C,H,T,O,Y,I,K
+O,J,Y,E,U,L,N,C,C,L,Y,B,Z,U,H
+W,Z,M,I,S,U,K,U,R,B,I,D,U,X,S
+K,Y,L,B,Q,Q,P,M,D,F,C,K,E,A,B)";
+
 const string testVectorText =
 R"(U,M,K
 H,U,L
@@ -88,6 +105,16 @@ const string testFile = "test.txt";
 const string testFirstLine = "BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA";
 const vector<string> testVectorWords = { "BONES", "KHAN", "KIRK", "SCOTTY", "SPOCK", "SULU", "UHURA" };
 
+map <string, vector<vector<int > >> expMap = {
+	{"BONES", {{0,6},{0,7},{0,8},{0,9},{0,10}}},
+	{"KHAN", {{5,9},{5,8},{5,7},{5,6}}},
+	{"KIRK", {{4,7},{3,7},{2,7},{1,7}}},
+	{"SCOTTY", {{0,5},{1,5},{2,5},{3,5},{4,5},{5,5}}},
+	{"SPOCK", {{2,1},{3,2},{4,3},{5,4},{6,5}}},
+	{"SULU", {{3,3},{2,2},{1,1},{0,0}}},
+	{"UHURA", {{4,0},{3,1},{2,2},{1,3},{0,4}}}
+};
+
 //Functions for testing
 void testReadFile();
 void testGetFirstLine();
@@ -101,11 +128,13 @@ void testFindWordCorrLRD();
 void testFindWordCorrLRU();
 void testFindWordCorrRLU();
 void testFindWordCorrRLD();
+void testFullNoRead();
 
 //Utility Functions
 void stringCompareTest(string expected, string actual, string testName);
 void intCompare(int exp, int auct, string testName);
 int minCompare(int exp, int act, string testName);
+void printMap(map <string, vector<vector<int > >> map);
 
 //Runs the tests for wordSearch.cpp
 int main()
@@ -125,6 +154,9 @@ int main()
 	testFindWordCorrLRU();
 	testFindWordCorrRLU();
 	testFindWordCorrRLD();
+
+	//Test on test string (no reading file)
+	testFullNoRead();
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -398,7 +430,7 @@ void testFindWordCorrRLU()
 	}
 }
 
-//Test diagonally descendingfor find the coordinates of a word in a 2-d character vector in top right to bottom left
+//Test diagonally descending for find t of a word in a 2-d character vector in top right to bottom left
 void testFindWordCorrRLD()
 {
 	cout << "\nTest: Find word in vector in top right to bottom left direction\n";
@@ -414,5 +446,35 @@ void testFindWordCorrRLD()
 		printIntVector(expCorrRLD);
 		cout << "Actual Vector:\n";
 		printIntVector(actCorr);
+	}
+}
+
+//Prints out the map of string as key and 2-d vector of int
+void printMap(map <string, vector<vector<int > >> map)
+{
+	for (pair< string, vector<vector<int>>> elem : map)
+	{
+		cout << elem.first << " : ";
+		printIntVector(elem.second);
+	}
+}
+
+//Test find words character grid without reading a file.
+void testFullNoRead()
+{
+	cout << "\nTest: Find words in string character  \n";
+	const vector<vector<char> >gridTextVector = getVectorCharGrid(textGrid);
+	map <string, vector<vector<int > >> actMap = findAllWords(testVectorWords, gridTextVector);
+	if (actMap == expMap)
+	{
+		cout << "Success: Results maps do match\n";
+	}
+	else
+	{
+		cout << "Failure: Results maps do not match\n";
+		cout << "Expected map:\n";
+		printMap(expMap);
+		cout << "Actual map:\n";
+		printMap(actMap);
 	}
 }

@@ -3,6 +3,21 @@
 
 #include "wordSearch.h"
 
+//Finds all the words in a vector in 2-d character grid
+//Parameters: words to find as vector of string, text grid as 2-d vector
+//Return: string
+map < string, vector<vector<int > >> findAllWords(vector<string> words, vector < vector<char> >  grid)
+{
+	map < string, vector<vector<int > >> retMap;
+
+	for (int i = (int)words.size() - 1; i >= 0; i--)
+	{
+		retMap[words[i]] = findCorr(words[i], grid);
+	}
+
+	return retMap;
+}
+
 //Reads a file and returns the text from the file as a string
 //Parameters: file name as string
 //Return: string
