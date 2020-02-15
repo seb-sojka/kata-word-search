@@ -129,12 +129,12 @@ void testFindWordCorrLRU();
 void testFindWordCorrRLU();
 void testFindWordCorrRLD();
 void testFullNoRead();
+void testFull();
 
 //Utility Functions
 void stringCompareTest(string expected, string actual, string testName);
 void intCompare(int exp, int auct, string testName);
 int minCompare(int exp, int act, string testName);
-void printMap(map <string, vector<vector<int > >> map);
 
 //Runs the tests for wordSearch.cpp
 int main()
@@ -157,6 +157,10 @@ int main()
 
 	//Test on test string (no reading file)
 	testFullNoRead();
+
+	//Full test
+	testFull();
+
 }
 
 //Tests function readFile from wordSearch.cpp
@@ -449,16 +453,6 @@ void testFindWordCorrRLD()
 	}
 }
 
-//Prints out the map of string as key and 2-d vector of int
-void printMap(map <string, vector<vector<int > >> map)
-{
-	for (pair< string, vector<vector<int>>> elem : map)
-	{
-		cout << elem.first << " : ";
-		printIntVector(elem.second);
-	}
-}
-
 //Test find words character grid without reading a file.
 void testFullNoRead()
 {
@@ -476,5 +470,24 @@ void testFullNoRead()
 		printMap(expMap);
 		cout << "Actual map:\n";
 		printMap(actMap);
+	}
+}
+
+//Full test run where function is called to open file, read it, and find the words and thier coornidates
+void testFull()
+{
+	cout << "\nTest: Find words in string character  \n";
+	map <string, vector<vector<int > >> actMap = wordSearch(testFile);
+	cout << "Actual map:\n";
+	printMap(actMap);
+	if (actMap == expMap)
+	{
+		cout << "Success: Results maps do match\n";
+	}
+	else
+	{
+		cout << "Failure: Results maps do not match\n";
+		cout << "Expected map:\n";
+		printMap(expMap);
 	}
 }

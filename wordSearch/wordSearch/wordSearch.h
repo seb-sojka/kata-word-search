@@ -14,3 +14,5 @@ vector<string> getWords(string textFile);
 vector<vector<char> > getVectorCharGrid(string textFile);
 vector<vector<int> > findCorr(string word, vector < vector<char> >  grid);
 map < string, vector<vector<int > >> findAllWords(vector<string> words, vector < vector<char> >  grid);
+map < string, vector<vector<int > >> wordSearch(string fileName);
+void printMap(map < string, vector<vector<int > >> map);

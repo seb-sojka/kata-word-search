@@ -5,7 +5,7 @@
 
 //Finds all the words in a vector in 2-d character grid
 //Parameters: words to find as vector of string, text grid as 2-d vector
-//Return: string
+//Return: map with string as key and corrdinates as 2-d vector of integers as value
 map < string, vector<vector<int > >> findAllWords(vector<string> words, vector < vector<char> >  grid)
 {
 	map < string, vector<vector<int > >> retMap;
@@ -186,4 +186,51 @@ vector<vector<int> > findCorr(string word, vector < vector<char> >  grid)
 		}
 	}
 	return setCoor(startingCoor, (int)word.length(), possibleDirections[directionIndex]);
+}
+
+//Performs a word search on a text file. Opens file, read and processes it, and returns map with string of words to be found and 2-d vector of thier character's coordinates
+//Parameters: file name as string
+//Return: map with string as key and corrdinates as 2-d vector of integers as value
+map < string, vector<vector<int > >> wordSearch(string fileName)
+{
+	string textFile = readFile(fileName);
+	vector<string> words = getWords(textFile);
+
+	//removes words from string file so it is only the character grid
+	textFile.erase(0, textFile.find("\n") + 1);
+
+	vector<vector<char> >textGrid = getVectorCharGrid(textFile);
+	return findAllWords(words, textGrid);
+}
+
+//Prints the integers from a 2-d vector
+//Parameters: 2-d vector of integers
+//Return: None
+static void printIntVector(vector<vector<int>>input)
+{
+	cout << "{ ";
+	for (int i = 0; i < input.size(); i++)
+	{
+		cout << "{ ";
+		cout << input[i][0];
+		for (int j = 1; j < input[i].size(); j++)
+		{
+			cout << ", " << to_string(input[i][j]);
+		}
+		cout << "}, ";
+	}
+	cout << "}";
+}
+
+//Prints out a map with values as string and 2-d vector as values
+//Parameters: Map with values as string and 2-d vector as values
+//Return: none
+void printMap(map < string, vector<vector<int > >> map)
+{
+	for (pair< string, vector<vector<int>>> elem : map)
+	{
+		cout << elem.first << " : ";
+		printIntVector(elem.second);
+		cout << "\n";
+	}
 }
