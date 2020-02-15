@@ -1,4 +1,4 @@
-#Word Search Testing#
+Word Search Testing
 ================
 Hello
 This program tests of functions related to word search program. The program can read a text file format and return words found and coordinates of their characters.
@@ -8,15 +8,15 @@ Note: Input and output section is taken from instructions given for this exercis
 ## Build and Run ##
 ### Linux ###
 First, update the gcc and g++ as to avoid errors in compiling, building, and running the program. They can be update or installed by the following commands in terminal.
-'''
+```
 sudo apt-get install gcc
 sudo apt-get install g++
-'''
+```
 In order to run test, open terminal with Makefile, *\kata-word-search\wordSearch\wordSearch.
 
-To compile and build, enter <pre>make</pre> into the terminal. This will compile and build the test program, testWordSearch. testWordSearch can be run with type its name into terminal.
+To compile and build, enter `make` into the terminal. This will compile and build the test program, testWordSearch. testWordSearch can be run with type its name into terminal.
 
-To compile, build, and run test program, enter <pre>make test</pre>. This will compile, build, and run the test program.
+To compile, build, and run test program, enter `make test`. This will compile, build, and run the test program.
 
 ## Input ##
 
