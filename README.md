@@ -12,11 +12,32 @@ First, update the gcc and g++ as to avoid errors in compiling, building, and run
 sudo apt-get install gcc
 sudo apt-get install g++
 ```
-In order to run test, open terminal with Makefile, *\kata-word-search\wordSearch\wordSearch.
+In order to run test, open terminal in folder with GNUmakefile, *\kata-word-search\wordSearch\wordSearch.
 
 To compile and build, enter `make` into the terminal. This will compile and build the test program, testWordSearch. testWordSearch can be run with type its name into terminal.
 
 To compile, build, and run test program, enter `make test`. This will compile, build, and run the test program.
+
+### Windows ###
+There are 2 method to compile, build, and run the test program on windows, developer command prompt and Visual Studio.
+
+For both methods, first install Visual Studio 2019. [Link](https://visualstudio.microsoft.com/)
+
+#### Developer Command Prompt ####
+Click on the Start and scroll **Visual Studio 2019** folder.
+
+Open the folder and click on **Developer Command Prompt for VS 2019**.
+
+After command prompt is open, change director to folder where the Makefile is located, ** \kata-word-search\wordSearch\wordSearch **.
+
+Enter in `nmake` to compile and build the test program. The program is name testWordSearch.exe.
+
+#### Visual Studio 2019 ####
+Open wordSearch.sln in Visual Studio 2019 located at *\kata-word-search\wordSearch.
+
+In Visual Studio, run debug by either go to clicking Debug->Start Debugging or press F5.
+
+If console closes automatically after running, disable automatically closing at Tools->Options->Debugging->Automatically close the console when debugging stops.
 
 ## Input ##
 
