@@ -5,6 +5,8 @@ This program tests of functions related to word search program. The program can 
 
 Note: Input and output section is taken from instructions given for this exercise.
 
+There is no user error protection where the user tries to run a word search without words, no character grid, wrong format, or wrong file type. 
+
 ## Build and Run ##
 ### Linux ###
 First, update the gcc and g++ as to avoid errors in compiling, building, and running the program. They can be update or installed by the following commands in terminal.
